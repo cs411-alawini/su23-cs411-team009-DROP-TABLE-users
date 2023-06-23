@@ -19,10 +19,10 @@
 
 |   Info      |        Description     |
 | ----------- | ---------------------- |
-|  Title      |       ProjectTitle     |
+|  Title      |Advance Course Explorer     |
 | System URL  |      link_to_system    |
 | Video Link  |      link_to_video     |
 
 ## Project Summary
 
-This is a summary of the project!
+Our application aims to enhance the functionality of Course Explorer and Advance Registration at U of I. Specifically, we want our website to provide additional features to our users (students). Our goal is to allow students to utilize our website for searching new classes, receiving updates on available seat courses, conducting more advanced searches, and effectively planning their future schedules. One notable feature is the integration of an interactive map that displays the locations of their scheduled classes. This will help students visualize their course arrangements. Additionally, we plan to incorporate warnings for tightly-packed class schedules and suggestions for alternative open sections that may better accommodate the student's timetable. Furthermore, we aspire to integrate the [average GPA for every course](https://waf.cs.illinois.edu/discovery/gpa_of_every_course_at_illinois/) into our website and database.
