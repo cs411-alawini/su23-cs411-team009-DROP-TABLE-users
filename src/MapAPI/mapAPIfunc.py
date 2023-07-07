@@ -50,8 +50,6 @@ def get_drive_travel_time(start_location, end_location):
         return int(travel_duration/60) #return in mins
     else:
         return "Error"
-
-        return None
     
     
 def get_transit_travel_time(start_location, end_location):
@@ -77,5 +75,3 @@ def get_transit_travel_time(start_location, end_location):
         return int(travel_duration/60) #return in mins
     else:
         return "Error"
-
-        return None
