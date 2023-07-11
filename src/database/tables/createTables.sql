@@ -1,4 +1,4 @@
-
+﻿
 CREATE TABLE User_Login_Table (
   NetId VARCHAR(10) PRIMARY KEY,
   email VARCHAR(255),
