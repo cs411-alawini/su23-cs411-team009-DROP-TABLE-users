@@ -18,7 +18,7 @@ CREATE TABLE Courses_Table (
   Instructor VARCHAR(255),
   GenEdID INT,
   avgGPA REAL,
-  Rate INT,
+  Rating INT,
   FOREIGN KEY (BuildingName) REFERENCES Map_Table(BuildingName),
   FOREIGN KEY (GenEdID) REFERENCES GenEd_Table(GenEdID)
 );
