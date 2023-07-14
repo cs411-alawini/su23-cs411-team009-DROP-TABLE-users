@@ -33,6 +33,7 @@ CREATE TABLE GenEd_Table (
 CREATE TABLE Map_Table (
   BuildingName VARCHAR(255) PRIMARY KEY,
   Address VARCHAR(255),
+  RoomNumber INT,
   Latitudes DECIMAL(9,6),
   Longitudes DECIMAL(9,6)
 );
