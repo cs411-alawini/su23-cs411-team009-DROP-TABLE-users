@@ -6,7 +6,7 @@ var connection = mysql.createConnection({
                 host: '35.208.214.110',
                 user: 'root',
                 password: 'YES',
-                database: 'classicmodels'
+                database: 'DROP_TABLE_db' //changing this to match the table we add (might need to change this)
 });
 
 connection.connect;
@@ -65,7 +65,7 @@ const updatePassword = fs.readFileSync('../src/database/Queries/UserLogin/update
 // @req getting information from frontend
 // @res sending information to frontend
 app.post('/post/createUser', function(req, res) {
-  db.query(findEmail, [req.body.email], function(err, res1) {
+    DROP_TABLE_db.query(findEmail, [req.body.email], function(err, res1) {
       if (err) { 
         console.log(err)
       } 
@@ -74,7 +74,7 @@ app.post('/post/createUser', function(req, res) {
       } 
       else {
         // check if netid already exists
-          db.query(findNetId, [req.body.netid], function (err2, res2) {
+          DROP_TABLE_db.query(findNetId, [req.body.netid], function (err2, res2) {
               if (err2) {
                   console.log(err2)
               } 
@@ -83,7 +83,7 @@ app.post('/post/createUser', function(req, res) {
               } 
               else {
                   // add new user to database
-                  db.query(addUser, [req.body.netid, req.body.email, req.body.password], function (err3, res3) {
+                  DROP_TABLE_db.query(addUser, [req.body.netid, req.body.email, req.body.password], function (err3, res3) {
                       if (err3) {
                           console.log(err3)
                       }
@@ -105,7 +105,7 @@ app.post('/post/createUser', function(req, res) {
 app.put('/put/updateUserPassword', function (req,res) {
   console.log("update password for" + req.body.netid);
   console.log(req.body.password);
-  db.query(updatePassword, [req.body.password,req.body.netid], (err1, res1) => {
+    DROP_TABLE_db.query(updatePassword, [req.body.password,req.body.netid], (err1, res1) => {
       if (err1) {
           console.log(err1)
       } else {
@@ -121,7 +121,7 @@ app.put('/put/updateUserPassword', function (req,res) {
 // @res sending info to frontend
 app.put('/put/updateUserEmail', function(req,res) {
   console.log("update email for" + req.body.netid);
-  db.query(updateEmail, [req.body.email,req.body.netid], function(err1, res1) {
+    DROP_TABLE_db.query(updateEmail, [req.body.email,req.body.netid], function(err1, res1) {
       if (err1) {
           console.log(err1)
       } else {
@@ -137,7 +137,7 @@ app.put('/put/updateUserEmail', function(req,res) {
 // @res sending info to frontend
 app.delete('/delete/deleteUser', function (req,res) {
     var netid = req.params.netid;
-    db.query(deleteUser, [netid], (err1, res1) => {
+    DROP_TABLE_db.query(deleteUser, [netid], (err1, res1) => {
         if (err1) {
             console.log(err1)
         } else {
@@ -153,7 +153,7 @@ app.get('post/findCourseInfo', (req,res) => {
     // Execute the query against the database
     var CRN_l = req.params.CRN;
     var sem = req.params.semester;
-    db.query(findCourseInfo, [CRN_l], [sem] ,(err, result) => {
+    DROP_TABLE_db.query(findCourseInfo, [CRN_l], [sem] ,(err, result) => {
         if(err)
         {
             console.error('Error executing the query:', err);
