@@ -22,7 +22,7 @@ app.post('/login', (req, res) => {
                 if (user.password === password) {
                     res.status("Login successful");
                 } else {
-                    res.json("Incorrect password");
+                    res.status("Incorrect password");
                 }
             }
         }
