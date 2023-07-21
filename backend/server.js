@@ -52,7 +52,7 @@ console.log(sql);
  
 // ------------------- User Login Table Queries ------------------- //
 
-// SQL Util Queries
+// SQL Util Queries for user Table
 const findNetId = fs.readFileSync('../src/database/Queries/UserLogin/findNetId.sql').toString();
 const findEmail = fs.readFileSync('../src/database/Queries/UserLogin/findEmail.sql').toString();
 const addUser = fs.readFileSync('../src/database/Queries/UserLogin/addUser.sql').toString();
@@ -146,6 +146,25 @@ app.delete('/delete/deleteUser', function (req,res) {
     });
 });
 
+const findCourseInfo = fs.readFileSync('../src/database/Queries/Courses/findCourseInfo.sql').toString();
+
+
+app.get('post/findCourseInfo', (req,res) => {
+    // Execute the query against the database
+    var CRN_l = req.params.CRN;
+    var sem = req.params.semester;
+    db.query(findCourseInfo, [CRN_l], [sem] ,(err, result) => {
+        if(err)
+        {
+            console.error('Error executing the query:', err);
+        } 
+        else 
+        {
+            // Display the results back to the user
+            res.json(result);
+        }
+    });
+});
 
 
 app.listen(80, function () {
