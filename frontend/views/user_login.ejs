@@ -1,0 +1,73 @@
+<%- include("outlines/headers"); -%>
+<body>
+
+
+  <div class="container mt-4" >
+    <div class="card">
+        <div class="card-body">
+            <h4>User Log in</h4>
+            <formW action="createUser" method="POST">
+                <div class="form-group">
+                <label for="netid">netid:</label>
+                <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
+                <label for="email">email:</label>
+                <input type="text" class="form-control col-lg-9" id="email" aria-describedby="emailHelp" placeholder="Enter email address" name="email">
+                <label for="password">password:</label>
+                <input type="text" class="form-control col-lg-9" id="password" aria-describedby="emailHelp" placeholder="Enter your password" name="password">
+                </div>
+                <button type="submit" class="btn btn-outline-primary">log in</button>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <div class="container mt-4" >
+    <div class="card">
+        <div class="card-body">
+            <h4>Change Password</h4>
+            <formW action="updateUserPassword" method="POST">
+                <div class="form-group">
+                <label for="netid">netid:</label>
+                <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
+                <label for="password">password:</label>
+                <input type="text" class="form-control col-lg-9" id="password" aria-describedby="emailHelp" placeholder="Enter your password" name="password">
+                </div>
+                <button type="submit" class="btn btn-outline-primary">update</button>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <div class="container mt-4" >
+    <div class="card">
+        <div class="card-body">
+            <h4>Change Email Address</h4>
+            <formW action="updateUserEmail" method="POST">
+                <div class="form-group">
+                <label for="netid">netid:</label>
+                <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
+                <label for="email">email:</label>
+                <input type="text" class="form-control col-lg-9" id="email" aria-describedby="emailHelp" placeholder="Enter email address" name="email">
+                </div>
+                <button type="submit" class="btn btn-outline-primary">update</button>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <div class="container mt-4" >
+    <div class="card">
+        <div class="card-body">
+            <h4>Delete user</h4>
+            <formW action="deleteUser" method="POST">
+                <div class="form-group">
+                <label for="netid">netid:</label>
+                <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
+                </div>
+                <button type="submit" class="btn btn-outline-primary">confirm</button>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  </body>

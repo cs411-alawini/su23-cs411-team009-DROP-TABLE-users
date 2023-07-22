@@ -2,11 +2,12 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mysql = require('mysql2');
 var path = require('path');
+var fs = require('fs');
 var connection = mysql.createConnection({
-                host: '35.208.214.110',
+                host: '34.71.86.68',
                 user: 'root',
                 password: 'YES',
-                database: 'DROP_TABLE_db' //changing this to match the table we add (might need to change this)
+                database: 'classicmodels' //changing this to match the table we add (might need to change this)
 });
 
 connection.connect;
@@ -15,7 +16,7 @@ connection.connect;
 var app = express();
 
 // set up ejs view engine 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join('..','frontend', 'views'));
 app.set('view engine', 'ejs');
  
 app.use(express.json());
@@ -27,9 +28,27 @@ app.get('/', function(req, res) {
   res.render('index', { title: 'Mark Attendance' });
 });
 
-app.get('/success', function(req, res) {
-      res.send({'message': 'Attendance marked successfully!'});
-});
+/* response by navigate to user_login page */
+app.get('/user_login', function(req, res) {
+    res.render('user_login.ejs');
+  });
+  
+  app.get('/search', function(req, res) {
+    res.render('search.ejs');
+  });
+  
+  app.get('/update', function(req, res) {
+    res.render('update.ejs');
+  });
+  
+  app.get('/delete', function(req, res) {
+    res.render('delete.ejs');
+  });
+  
+  app.get('/advanced_query', function(req, res) {
+    res.render('advanced_query.ejs');
+  });
+
  
 // this code is executed when a user clicks the form submit button
 app.post('/mark', function(req, res) {
@@ -64,7 +83,7 @@ const updatePassword = fs.readFileSync('../src/database/Queries/UserLogin/update
 // @desc create new user and insert the information into 'User_Login_Table'
 // @req getting information from frontend
 // @res sending information to frontend
-app.post('/post/createUser', function(req, res) {
+app.post('/createUser', function(req, res) {
     DROP_TABLE_db.query(findEmail, [req.body.email], function(err, res1) {
       if (err) { 
         console.log(err)
@@ -102,7 +121,7 @@ app.post('/post/createUser', function(req, res) {
 // @desc update user's password in 'User_Login_Table'
 // @req getting info from frontend
 // @res sending info to frontend
-app.put('/put/updateUserPassword', function (req,res) {
+app.put('/updateUserPassword', function (req,res) {
   console.log("update password for" + req.body.netid);
   console.log(req.body.password);
     DROP_TABLE_db.query(updatePassword, [req.body.password,req.body.netid], (err1, res1) => {
@@ -119,7 +138,7 @@ app.put('/put/updateUserPassword', function (req,res) {
 // @desc update user's email address in 'User_Login_Table'
 // @req getting info from frontend
 // @res sending info to frontend
-app.put('/put/updateUserEmail', function(req,res) {
+app.put('/updateUserEmail', function(req,res) {
   console.log("update email for" + req.body.netid);
     DROP_TABLE_db.query(updateEmail, [req.body.email,req.body.netid], function(err1, res1) {
       if (err1) {
@@ -135,7 +154,7 @@ app.put('/put/updateUserEmail', function(req,res) {
 // @desc delete user from 'User_Login_Table'
 // @req getting info from frontend
 // @res sending info to frontend
-app.delete('/delete/deleteUser', function (req,res) {
+app.delete('/deleteUser', function (req,res) {
     var netid = req.params.netid;
     DROP_TABLE_db.query(deleteUser, [netid], (err1, res1) => {
         if (err1) {
@@ -149,7 +168,7 @@ app.delete('/delete/deleteUser', function (req,res) {
 const findCourseInfo = fs.readFileSync('../src/database/Queries/Courses/findCourseInfo.sql').toString();
 
 
-app.get('post/findCourseInfo', (req,res) => {
+app.get('/findCourseInfo', (req,res) => {
     // Execute the query against the database
     var CRN_l = req.params.CRN;
     var sem = req.params.semester;

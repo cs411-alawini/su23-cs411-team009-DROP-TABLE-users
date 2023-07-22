@@ -6,3 +6,15 @@ body {
 a {
   color: #00B7FF;
 }
+.footer {
+  color: red;
+}
+
+.container {
+  text-align: center;
+}
+
+.centered-text {
+  font-size: 24px;
+  color: red;
+}
