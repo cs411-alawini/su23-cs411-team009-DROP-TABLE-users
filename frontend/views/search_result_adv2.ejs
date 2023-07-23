@@ -1,0 +1,47 @@
+<%- include("outlines/header"); -%>
+
+<body>
+  <style>
+    h1 {
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+
+  <h1>Search Results</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Course Name</th>
+        <th>Gened Group</th>
+        <th>Rating</th>
+        <th>Avergae GPA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (var i = 0; i < classes.length; i++) { %>
+        <tr>
+          <td><%= classes[i].HighestRatedClass %></td>
+          <td><%= classes[i].GroupName %></td>
+          <td><%= classes[i].MaxRating %></td>
+          <td><%= classes[i].AvgGPA %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>

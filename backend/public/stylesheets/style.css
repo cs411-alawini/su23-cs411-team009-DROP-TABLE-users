@@ -1,0 +1,20 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.footer {
+  color: red;
+}
+
+.container {
+  text-align: center;
+}
+
+.centered-text {
+  font-size: 24px;
+  color: red;
+}
