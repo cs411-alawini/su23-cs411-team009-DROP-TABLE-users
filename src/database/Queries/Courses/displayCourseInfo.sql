@@ -1,0 +1,1 @@
+SELECT * FROM Coursse_Table WHERE CRN LIKE ?

@@ -1,4 +1,4 @@
-<%- include("outlines/header"); -%>
+<%- include("outlines/headers"); -%>
 
 <body>
   <style>
@@ -29,8 +29,15 @@
         <th>Class Name</th>
         <th>CRN</th>
         <th>Semester</th>
+        <th>Department</th>
         <th>Instructor</th>
         <th>Credits</th>
+        <th>Location</th>
+        <th>Start Time</th>
+        <th>Days</th>
+        <th>GenEd ID</th>
+        <th>Average GPA</th>
+        <th>Rating</th>
       </tr>
     </thead>
     <tbody>
@@ -39,8 +46,15 @@
           <td><%= classes[i].Title %></td>
           <td><%= classes[i].CRN %></td>
           <td><%= classes[i].Semester %></td>
+          <td><%= classes[i].Department %></td>
           <td><%= classes[i].Instructor %></td>
           <td><%= classes[i].Credits %></td>
+          <td><%= classes[i].BuildingName %></td>
+          <td><%= classes[i].Time %></td>
+          <td><%= classes[i].Day %></td>
+          <td><%= classes[i].GenEdID %></td>
+          <td><%= classes[i].avgGPA %></td>
+          <td><%= classes[i].Rating %></td>
         </tr>
       <% } %>
     </tbody>

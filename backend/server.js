@@ -7,7 +7,7 @@ var DROP_TABLE_db = mysql.createConnection({
                 host: '34.71.86.68',
                 user: 'root',
                 password: 'YES',
-                database: 'classicmodels' //changing this to match the table we add (might need to change this)
+                database: 'TestUser' //changing this to match the table we add (might need to change this)
 });
 
 DROP_TABLE_db.connect;
@@ -55,6 +55,7 @@ const addUser = fs.readFileSync('../src/database/Queries/UserLogin/addUser.sql')
 const deleteUser = fs.readFileSync('../src/database/Queries/UserLogin/deleteUser.sql').toString();
 const updateEmail = fs.readFileSync('../src/database/Queries/UserLogin/updateEmail.sql').toString();
 const updatePassword = fs.readFileSync('../src/database/Queries/UserLogin/updatePassword.sql').toString();
+const displayInfo = fs.readFileSync('../src/database/Queries/UserLogin/displayInfo.sql').toString();
 
 // POST Request: Create new User
 // @desc create new user and insert the information into 'User_Login_Table'
@@ -67,12 +68,7 @@ app.post('/createUser', function(req, res) {
         console.log(err)
       } 
       else if (res1.length >= 1) {
-          res.send("Email Exists")
-          // 2 second delay
-          setTimeout(function(){
-            console.log("Email Exists: Executed after 2 second");
-          }, 2000);
-          res.redirect('/login');
+          res.send("Email Exists");
       } 
       else {
         // check if netid already exists
@@ -81,12 +77,7 @@ app.post('/createUser', function(req, res) {
                   console.log(err2)
               } 
               else if (res2.length >= 1) {
-                  res.send("NetId Exists")
-                  // 2 second delay
-                  setTimeout(function(){
-                    console.log("NetId Exists: Executed after 2 second");
-                  }, 2000);
-                  res.redirect('/login');
+                  res.send("NetId Exists");
               } 
               else {
                   // add new user to database
@@ -95,8 +86,10 @@ app.post('/createUser', function(req, res) {
                           console.log(err3)
                       }
                       else {
-                        console.log("new user: " + req.body.netid + " added to database");
-                        res.render('user_login_result', { info: res3 });
+                        DROP_TABLE_db.query(displayInfo,[req.body.netid],function(err5,result4){
+                          console.log("new user: " + req.body.netid + " added to database");
+                          res.render('user_login_result', { info: result4 });
+                        });
                       }
                   });
               }
@@ -111,12 +104,14 @@ app.post('/createUser', function(req, res) {
 // @res sending info to frontend
 app.post('/updateUserPassword', function (req,res) {
   console.log("/updateUserPassword");
-    DROP_TABLE_db.query(updatePassword, [req.body.password,req.body.netid], (err1, result) => {
+    DROP_TABLE_db.query(updatePassword, [req.body.password,req.body.netid], (err1, res1) => {
       if (err1) {
           console.log(err1)
       } else {
+        DROP_TABLE_db.query(displayInfo,[req.body.netid],function(err2,res2){
           console.log("new password updated: " + req.body.password);
-          res.render('user_login_result', { info: result });
+          res.render('user_login_result', { info: res2 });
+        });
       }
   });
 });
@@ -131,8 +126,10 @@ app.post('/updateUserEmail', function(req,res) {
       if (err1) {
           console.log(err1)
       } else {
+        DROP_TABLE_db.query(displayInfo,[req.body.netid],function(err2,res2){
           console.log("new email updated: " + req.body.email);
-          res.render('user_login_result', { info: res1 });
+          res.render('user_login_result', { info: res2 });
+        });
       }
   });
 });
@@ -149,6 +146,7 @@ app.post('/deleteUser', function (req,res) {
             console.log(err1)
         } else {
             res.send("Deleted Sucessfully");
+            console.log("the following user is deleted:" + netid);
         }
     });
 });
@@ -164,6 +162,7 @@ const updateBuilding = fs.readFileSync('../src/database/Queries/Courses/updateBu
 const updateTime = fs.readFileSync('../src/database/Queries/Courses/updateTime.sql').toString();
 const updateInstructor = fs.readFileSync('../src/database/Queries/Courses/updateInstructor.sql').toString();
 const deleteCourse = fs.readFileSync('../src/database/Queries/Courses/deleteCourse.sql').toString();
+const displayCourseInfo = fs.readFileSync('../src/database/Queries/Courses/displayCourseInfo.sql').toString();
 
 // POST Request: Add New Courses
 // @desc create new user and insert the information into 'User_Login_Table'
@@ -177,10 +176,6 @@ app.post('/addCourses', function(req, res) {
     } 
     else if (res1.length >= 1) {
         res.send("Course Exists")
-        // 2 second delay
-        setTimeout(function(){
-          console.log("Course Exists: Executed after 2 second");
-        }, 2000);
         res.redirect('/admin');
     } 
     else {
@@ -199,13 +194,10 @@ app.post('/addCourses', function(req, res) {
               console.log(err3)
           }
           else {
-            console.log("new course added");
-            res.send("New Course Added");
-            // 2 second delay
-            setTimeout(function(){
-              console.log("Wait for 2 sec and back to /admin");
-            }, 2000);
-            res.redirect('/admin');
+            DROP_TABLE_db.query(displayCourseInfo,[req.body.CRN],function(err2,res2){
+              console.log("new course added");
+              res.render('search_result', { classes: res2 });
+            });
           }
       });
     }
@@ -223,11 +215,7 @@ app.post('/updateCourseInfo', function (req,res) {
       console.log(err)
     } 
     else if (res1.length == 0) {
-        res.send("Course Not Exists")
-        // 2 second delay
-        setTimeout(function(){
-          console.log("Course Not Exists: Executed after 2 second");
-        }, 2000);
+        res.send("Course Not Exists");
         res.redirect('/admin');
     } 
     else {
@@ -270,14 +258,10 @@ app.post('/updateCourseInfo', function (req,res) {
             }
           });
         }
-        console.log("update sucessfully")
-        res.send("Update Successfully");
-        // 2 second delay
-        setTimeout(function(){
-          console.log("Update Successfully: Executed after 2 second");
-        }, 2000);
-        res.redirect('/admin');
-
+        DROP_TABLE_db.query(displayCourseInfo,[req.body.CRN],function(err2,res2){
+          console.log("update sucessfully");
+          res.render('search_result', { classes: res2 });
+        });
     }
   });
 });
@@ -293,10 +277,6 @@ app.post('/deleteCourse', function (req,res) {
           console.log(err1)
       } else {
           res.send("Deleted Sucessfully");
-          // 2 second delay
-          setTimeout(function(){
-            console.log("Course Not Exists: Executed after 2 second");
-          }, 2000);
           res.redirect('/admin');
       }
   });
