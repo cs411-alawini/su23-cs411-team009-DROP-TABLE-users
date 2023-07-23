@@ -1,1 +1,1 @@
-SELECT * FROM Coursse_Table WHERE CRN LIKE ?
+SELECT * FROM Courses_Table WHERE CRN LIKE ?

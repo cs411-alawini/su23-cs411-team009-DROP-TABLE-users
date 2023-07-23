@@ -39,7 +39,7 @@
     <div class="container mt-4" id="searchRating">
         <div class="card">
         <div class="card-body">
-         <h2>Search Department:</h2>
+         <h2>Search by Minimum Rating:</h2>
          <form action="searchRating" method="POST">
            <div class="form-group">
              <label for="Rating">Minimum Rating:</label>
@@ -56,13 +56,11 @@
     <div class="container mt-4" id="advSearch1">
         <div class="card">
         <div class="card-body">
-         <h2>Advance Search with Top GPAs:</h2>
+         <h2>Average Rating of Professor per GenedGroup:</h2>
          <form action="advSearch1" method="POST">
            <div class="form-group">
-             <label for="department">Department Name:</label>
-             <input type="text" class="form-control col-lg-9" id="department" aria-describedby="emailHelp" placeholder="Enter Department Name" name="department">
-             <label for="count">Numer of Classes:</label>
-             <input type="text" class="form-control col-lg-9" id="count" aria-describedby="emailHelp" placeholder="Enter numbers" name="Rating">    
+             <label for="genedGroup">GenedGroup:</label>
+             <input type="text" class="form-control col-lg-9" id="genedGroup" aria-describedby="emailHelp" placeholder="Enter Engineering Sciences,Math,etc" name="genedGroup">
            </div>
            <button type="submit" class="btn btn-outline-info">Search</button>
          </form>
@@ -73,7 +71,7 @@
     <div class="container mt-4" id="advSearch2">
       <div class="card">
       <div class="card-body">
-       <h2>Top GPA GenEd Courses by each group:</h2>
+       <h2>The Best GenEd Courses:</h2>
        <form action="advSearch2" method="POST">
          <button type="submit" class="btn btn-outline-info">See updated Best GenEds</button>
        </form>

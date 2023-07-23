@@ -1,0 +1,43 @@
+<%- include("outlines/headers"); -%>
+
+<body>
+  <style>
+    h1 {
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+
+  <h1>Search Results</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Instructor</th>
+        <th>Average Ratings</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (var i = 0; i < classes.length; i++) { %>
+        <tr>
+          <td><%= classes[i].Instructor %></td>
+          <td><%= classes[i].AvgRating %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>

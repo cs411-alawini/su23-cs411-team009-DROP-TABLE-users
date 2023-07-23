@@ -7,7 +7,7 @@ var DROP_TABLE_db = mysql.createConnection({
                 host: '34.71.86.68',
                 user: 'root',
                 password: 'YES',
-                database: 'TestUser' //changing this to match the table we add (might need to change this)
+                database: 'TestUser2' //changing this to match the table we add (might need to change this)
 });
 
 DROP_TABLE_db.connect;
@@ -175,8 +175,7 @@ app.post('/addCourses', function(req, res) {
       console.log(err)
     } 
     else if (res1.length >= 1) {
-        res.send("Course Exists")
-        res.redirect('/admin');
+        res.send("Course Exists");
     } 
     else {
         var CRN = req.body.CRN;
@@ -216,12 +215,11 @@ app.post('/updateCourseInfo', function (req,res) {
     } 
     else if (res1.length == 0) {
         res.send("Course Not Exists");
-        res.redirect('/admin');
     } 
     else {
         var CRN = req.body.CRN;
         var title = req.body.title;
-        if (title != null){
+        if (title != ''){
           DROP_TABLE_db.query(updateTitle, [title,CRN], function (err4, res3) {
             if (err4) {
                 console.log(err4)
@@ -229,21 +227,21 @@ app.post('/updateCourseInfo', function (req,res) {
           });
         }
         var department = req.body.department;
-        if (department != null){
+        if (department != ''){
           DROP_TABLE_db.query(updateDept, [department,CRN], function (err5, res3) {
           if (err5) {
               console.log(err5)
           }
         });}
         var buildingName = req.body.buildingName;
-        if (buildingName != null){
+        if (buildingName != ''){
           DROP_TABLE_db.query(updateBuilding, [buildingName,CRN], function (err6, res3) {
           if (err6) {
               console.log(err6)
           }
         });}
         var start_time = req.body.start_time;
-        if (start_time != null){
+        if (start_time != ''){
           DROP_TABLE_db.query(updateTime, [start_time,CRN], function (err7, res3) {
             if (err7) {
                 console.log(err7)
@@ -251,16 +249,16 @@ app.post('/updateCourseInfo', function (req,res) {
           });
         }
         var instructor = req.body.instructor;
-        if (instructor != null){
+        if (instructor != ''){
           DROP_TABLE_db.query(updateInstructor, [instructor,CRN], function (err9, res3) {
             if (err9) {
                 console.log(err9)
             }
           });
         }
-        DROP_TABLE_db.query(displayCourseInfo,[req.body.CRN],function(err2,res2){
+        DROP_TABLE_db.query(displayCourseInfo,[req.body.CRN],function(err2,result){
           console.log("update sucessfully");
-          res.render('search_result', { classes: res2 });
+          res.render('search_result', { classes: result });
         });
     }
   });
@@ -277,7 +275,6 @@ app.post('/deleteCourse', function (req,res) {
           console.log(err1)
       } else {
           res.send("Deleted Sucessfully");
-          res.redirect('/admin');
       }
   });
 });
@@ -289,11 +286,10 @@ app.post('/deleteCourse', function (req,res) {
 // @res sending info to frontend
 app.post('/searchDept', function(req, res) {
   console.log("/searchDept");
-  var deparmtent = req.body.deparmtent;
+  var department = req.body.department;
   var semester = req.body.semester;
-  
-  if (semester == null) {
-    DROP_TABLE_db.query('SELECT * FROM Courses_Table WHERE Department = ? ORDER BY Semester', [deparmtent], function(err, result) {
+  if (semester == '') {
+    DROP_TABLE_db.query('SELECT * FROM Courses_Table WHERE Department = ? ORDER BY Semester', [department], function(err, result) {
       if (err) {
         res.send(err)
         return;
@@ -302,7 +298,7 @@ app.post('/searchDept', function(req, res) {
     });  
   }
   else {  
-    DROP_TABLE_db.query('SELECT * FROM Courses_Table WHERE Department = ? AND Semester = ?', [deparmtent,semester], function(err, result) {
+    DROP_TABLE_db.query('SELECT * FROM Courses_Table WHERE Department = ? AND Semester = ?', [department,semester], function(err, result) {
       if (err) {
         res.send(err)
         return;
@@ -320,7 +316,7 @@ app.post('/searchInstr', function(req, res) {
   var instructor = req.body.instructor;
   var semester = req.body.semester;
 
-  if (semester == null) {
+  if (semester == '') {
     DROP_TABLE_db.query('SELECT * FROM Courses_Table WHERE Instructor = ? ORDER BY Semester', [instructor], function(err, result) {
       if (err) {
         res.send(err)
@@ -349,7 +345,7 @@ app.post('/searchRating', function(req, res) {
   var Rating = req.body.Rating;
   var semester = req.body.semester;
 
-  if (semester == null) {
+  if (semester == '') {
     DROP_TABLE_db.query('SELECT * FROM Courses_Table WHERE Rating >= ? ORDER BY Semester', [Rating], function(err, result) {
       if (err) {
         res.send(err)
@@ -371,8 +367,8 @@ app.post('/searchRating', function(req, res) {
 
 
 // advance Queries
-const findBestGenEds = fs.readFileSync('../src/database/Queries/advQueries/getBestGenEds.sql').toString();
-const findHighestClassByDept = fs.readFileSync('../src/database/Queries/advQueries/getEasiestCoursesperDepartment.sql').toString();
+const getBestGenEds = fs.readFileSync('../src/database/Queries/advQueries/getBestGenEds.sql').toString();
+const avgRatingForProfByGenEds = fs.readFileSync('../src/database/Queries/advQueries/avgRatingForProfByGenEds.sql').toString();
 
 
 // POST Request: Get TOP N GPA courses
@@ -382,15 +378,14 @@ const findHighestClassByDept = fs.readFileSync('../src/database/Queries/advQueri
 // @res sending info to frontend
 app.post('/advSearch1', function(req, res) {
   console.log("/advSearch1");
-  var department = req.body.deparmtent;
-  var count = req.body.count;
+  var genedGroup = req.body.genedGroup;
 
-  DROP_TABLE_db.query(findHighestClassByDept, [department, count], function(err, result) {
+  DROP_TABLE_db.query(avgRatingForProfByGenEds, [genedGroup], function(err, result) {
     if (err) {
       console.error(err);
       return;
     }
-    res.render('search_result',{classes: result})
+    res.render('search_result_adv1',{classes: result})
   });
 });
 
@@ -398,9 +393,9 @@ app.post('/advSearch1', function(req, res) {
 // @desc search courses by Rating from 'Course_Table'
 // @req getting info from frontend
 // @res sending info to frontend
-app.post('/advSearch2', (res) => {
+app.post('/advSearch2', (req, res) => {
   console.log("/advSearch2");
-  DROP_TABLE_db.query(findBestGenEds, (err, result) => {
+  DROP_TABLE_db.query(getBestGenEds, (err, result) => {
     if (err) {
       console.error(err);
       return;
