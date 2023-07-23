@@ -1,0 +1,78 @@
+<%- include("outlines/headers"); -%>
+<body>
+
+    <div class="container mt-4" id="addCourses">
+      <div class="card">
+      <div class="card-body">
+       <h2>Add New Course:</h2>
+       <form action="addCourses" method="POST">
+         <div class="form-group">
+           <label for="CRN">CRN:</label>
+           <input type="text" class="form-control col-lg-9" id="CRN" aria-describedby="emailHelp" placeholder="Enter Course CRN" name="CRN">
+           <label for="semester">Semester:</label>
+           <input type="text" class="form-control col-lg-9" id="semester" aria-describedby="emailHelp" placeholder="Enter Course semester" name="semester">
+           <label for="title">Title:</label>
+           <input type="text" class="form-control col-lg-9" id="title" aria-describedby="emailHelp" placeholder="Enter Course title" name="title">
+           <label for="department">department:</label>
+           <input type="text" class="form-control col-lg-9" id="department" aria-describedby="emailHelp" placeholder="Enter Course department" name="department">
+           <label for="credits">credits:</label>
+           <input type="text" class="form-control col-lg-9" id="credits" aria-describedby="emailHelp" placeholder="Enter Course CRN" name="credits">
+           <label for="buildingName">Building Name:</label>
+           <input type="text" class="form-control col-lg-9" id="buildingName" aria-describedby="emailHelp" placeholder="Enter Course building Name" name="buildingName">
+           <label for="start_time">Start Time:</label>
+           <input type="text" class="form-control col-lg-9" id="start_time" aria-describedby="emailHelp" placeholder="Enter Course start time" name="start_time">
+           <label for="day">day:</label>
+           <input type="text" class="form-control col-lg-9" id="day" aria-describedby="emailHelp" placeholder="Enter Course day" name="day">
+           <label for="instructor">instructor:</label>
+           <input type="text" class="form-control col-lg-9" id="instructor" aria-describedby="emailHelp" placeholder="Enter Course instructor" name="instructor">
+           <label for="genedId">genedId:</label>
+           <input type="text" class="form-control col-lg-9" id="genedId" aria-describedby="emailHelp" placeholder="Non-gened class label '0' " name="genedId">
+        </div>
+         <button type="submit" class="btn btn-outline-info">Confirm</button>
+       </form>
+      </div>
+      </div>
+    </div>
+    
+    <div class="container mt-4" id="updateCourseInfo">
+        <div class="card">
+        <div class="card-body">
+         <h2>Add New Course:</h2>
+         <form action="updateCourseInfo" method="POST">
+           <div class="form-group">
+             <label for="CRN">CRN:</label>
+             <input type="text" class="form-control col-lg-9" id="CRN" aria-describedby="emailHelp" placeholder="Enter Course CRN" name="CRN">
+             <label for="title">Title:</label>
+             <input type="text" class="form-control col-lg-9" id="title" aria-describedby="emailHelp" placeholder="Enter Course title" name="title">
+             <label for="department">department:</label>
+             <input type="text" class="form-control col-lg-9" id="department" aria-describedby="emailHelp" placeholder="Enter Course department" name="department">
+             <label for="buildingName">Building Name:</label>
+             <input type="text" class="form-control col-lg-9" id="buildingName" aria-describedby="emailHelp" placeholder="Enter Course building Name" name="buildingName">
+             <label for="start_time">Start Time:</label>
+             <input type="text" class="form-control col-lg-9" id="start_time" aria-describedby="emailHelp" placeholder="Enter Course start time" name="start_time">
+             <label for="instructor">instructor:</label>
+             <input type="text" class="form-control col-lg-9" id="instructor" aria-describedby="emailHelp" placeholder="Enter Course instructor" name="instructor">
+          </div>
+           <button type="submit" class="btn btn-outline-info">Confirm</button>
+         </form>
+        </div>
+        </div>
+      </div>
+
+      <div class="container mt-4" id="deleteCourse">
+        <div class="card">
+        <div class="card-body">
+         <h2>Add New Course:</h2>
+         <form action="deleteCourse" method="POST">
+           <div class="form-group">
+             <label for="CRN">CRN:</label>
+             <input type="text" class="form-control col-lg-9" id="CRN" aria-describedby="emailHelp" placeholder="Enter Course CRN" name="CRN">
+          </div>
+           <button type="submit" class="btn btn-outline-info">Confirm</button>
+         </form>
+        </div>
+        </div>
+      </div>
+
+
+  </body>

@@ -1,0 +1,45 @@
+<%- include("outlines/header"); -%>
+
+<body>
+  <style>
+    h1 {
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+
+  <h1>User Information</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>NetID</th>
+        <th>Email Address</th>
+        <th>Password</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (var i = 0; i < info.length; i++) { %>
+        <tr>
+          <td><%= info[i].NetId %></td>
+          <td><%= info[i].email %></td>
+          <td><%= info[i].password %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>

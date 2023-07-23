@@ -2,11 +2,11 @@
 <body>
 
 
-  <div class="container mt-4" >
+  <div class="container mt-4" id="createUser">
     <div class="card">
         <div class="card-body">
             <h4>User Log in</h4>
-            <formW action="createUser" method="POST">
+            <form action="createUser" method="POST">
                 <div class="form-group">
                 <label for="netid">netid:</label>
                 <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
@@ -21,11 +21,11 @@
     </div>
   </div>
 
-  <div class="container mt-4" >
+  <div class="container mt-4" id="updateUserPassword">
     <div class="card">
         <div class="card-body">
             <h4>Change Password</h4>
-            <formW action="updateUserPassword" method="POST">
+            <form action="updateUserPassword" method="POST">
                 <div class="form-group">
                 <label for="netid">netid:</label>
                 <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
@@ -38,11 +38,11 @@
     </div>
   </div>
 
-  <div class="container mt-4" >
+  <div class="container mt-4" id="updateUserEmail">
     <div class="card">
         <div class="card-body">
             <h4>Change Email Address</h4>
-            <formW action="updateUserEmail" method="POST">
+            <form action="updateUserEmail" method="POST">
                 <div class="form-group">
                 <label for="netid">netid:</label>
                 <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
@@ -55,11 +55,11 @@
     </div>
   </div>
 
-  <div class="container mt-4" >
+  <div class="container mt-4" id="deleteUser">
     <div class="card">
         <div class="card-body">
             <h4>Delete user</h4>
-            <formW action="deleteUser" method="POST">
+            <form action="deleteUser" method="POST">
                 <div class="form-group">
                 <label for="netid">netid:</label>
                 <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">

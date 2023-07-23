@@ -1,0 +1,1 @@
+DELETE FROM Courses_Table WHERE CRN LIKE ?
