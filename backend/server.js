@@ -336,6 +336,11 @@ app.post('/searchInstr', function(req, res) {
   }
 });
 
+//templete code for map
+app.get('/map', (req, res) => {
+    res.render('mapRender');
+})
+
 // POST Request: Search by Rating
 // @desc search courses by Rating from 'Course_Table'
 // @req getting info from frontend
