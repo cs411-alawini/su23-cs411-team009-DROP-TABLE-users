@@ -338,7 +338,11 @@ app.post('/searchInstr', function(req, res) {
 
 //templete code for map
 app.get('/map', (req, res) => {
-    const { startLat, startLon, endLat, endLon } = req.query; //need for Map_Table to get this per CRN
+    //const { startLat, startLon, endLat, endLon } = req.query; //need for Map_Table to get this per CRN
+    var startLat = 40.109452;
+    var startLon = 88.227241;
+    var endLat = 40.101811;
+    var endLon = -88.231658;
     res.render('mapRender')
     {
         startLocation: { lat: startLat, lon: startLon },
