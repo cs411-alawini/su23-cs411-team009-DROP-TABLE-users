@@ -14,11 +14,41 @@
     <h1>Map Render</h1>
     <div id="mapContainer"></div>
     <script type="text/javascript">
+        //loads in the map render 
         function loadMapScenario() {
             var map = new Microsoft.Maps.Map(document.getElementById('mapContainer'), {
                 credentials: 'AnCiUQKehSo7BmsdF1bKwT9veAkYnhOI0bwCbnTERCvK4QidM97x4ZnGaGoqSyUP',
                 center: new Microsoft.Maps.Location(40.1140, -88.2281), // Set the center to the ECE Building at UIUC (latitude, longitude)
-                zoom: 12 // Set the initial zoom level (higher values mean closer view)
+                zoom: 12 // Set the initial zoom level 
+            });
+            var startLocation = new Microsoft.Maps.Location(<%= startLocation.lat %>, <%= startLocation.lon %>);  // Starting location
+            var endLocation = new Microsoft.Maps.Location((<%= endLocation.lat %>, <%= endLocation.lon %>);     // Ending location
+
+            //Create directions manager used of showing the route
+            Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+                var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+                
+                // Create waypoints
+                var startWaypoint = new Microsoft.Maps.Directions.Waypoint({ location: startLocation });
+                var endWaypoint = new Microsoft.Maps.Directions.Waypoint({ location: endLocation });
+                
+                // Add waypoints to direction manager
+                directionsManager.addWaypoint(startWaypoint);
+                directionsManager.addWaypoint(endWaypoint);
+
+                // Set the request options that avoid highways and avoid toll roads.
+                directionsManager.setRequestOptions({
+                    routeMode: Microsoft.Maps.Directions.RouteMode.walking,
+                    routeAvoidance: [Microsoft.Maps.Directions.RouteAvoidance.avoidLimitedAccessHighway, Microsoft.Maps.Directions.RouteAvoidance.avoidToll]
+                });
+
+                // Specify the element in which the itinerary will be rendered.
+                directionsManager.setRenderOptions({
+                    itineraryContainer: document.getElementById('printoutPanel')
+                });
+
+                // Calculate directions, which displays a route on the map.
+                directionsManager.calculateDirections();
             });
         }
     </script>

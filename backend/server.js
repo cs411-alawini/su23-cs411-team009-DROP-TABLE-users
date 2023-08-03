@@ -338,7 +338,12 @@ app.post('/searchInstr', function(req, res) {
 
 //templete code for map
 app.get('/map', (req, res) => {
-    res.render('mapRender');
+    const { startLat, startLon, endLat, endLon } = req.query; //need for Map_Table to get this per CRN
+    res.render('mapRender')
+    {
+        startLocation: { lat: startLat, lon: startLon },
+        endLocation: { lat: endLat, lon: endLon }
+    };
 })
 
 // POST Request: Search by Rating
