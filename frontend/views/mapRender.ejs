@@ -13,6 +13,7 @@
 <body>
     <h1>Map Render</h1>
     <div id="mapContainer"></div>
+    <div id>="travelTime"><div>
     <script type="text/javascript">
         //loads in the map render 
         function loadMapScenario() {
@@ -45,6 +46,15 @@
                 // Specify the element in which the itinerary will be rendered.
                 directionsManager.setRenderOptions({
                     itineraryContainer: document.getElementById('printoutPanel')
+                });
+
+                Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', function (eventArgs) {
+                    var routeSummary = eventArgs.routeSummary[0];
+                    var travelTime = routeSummary.timeWithTraffic; // Get the travel time
+
+                    // Display the travel time
+                    var travelTimeElement = document.getElementById('travelTime');
+                    travelTimeElement.textContent = 'Travel Time: ' + travelTime + ' minutes';
                 });
 
                 // Calculate directions, which displays a route on the map.
