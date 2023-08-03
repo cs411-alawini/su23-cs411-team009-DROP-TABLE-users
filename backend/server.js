@@ -45,9 +45,22 @@ app.get('/admin', function(req, res) {
     res.render('admin.ejs');
   });
 
-app.get('/map', function(req, res) {
-    res.render('map.ejs');
-  });
+// app.get('/map', function(req, res) {
+//     res.render('map.ejs');
+//   });
+
+  app.get('/map', function (req, res)  {
+    //const { startLat, startLon, endLat, endLon } = req.query; //need for Map_Table to get this per CRN
+    var startLat = 40.109452;
+    var startLon = 88.227241;
+    var endLat = 40.101811;
+    var endLon = -88.231658;
+    res.render('map.ejs',
+    {
+        startLocation: { lat: startLat, lon: startLon },
+        endLocation: { lat: endLat, lon: endLon }
+    });
+  })
 
 
   
@@ -475,3 +488,19 @@ app.post('/CheckSchedule', function(req, res) {
     });
 });
 
+
+// ------------------- Schedule Page ------------------- //
+
+
+app.get('/map', (req, res) => {
+  //const { startLat, startLon, endLat, endLon } = req.query; //need for Map_Table to get this per CRN
+  var startLat = 40.109452;
+  var startLon = 88.227241;
+  var endLat = 40.101811;
+  var endLon = -88.231658;
+  res.render('mapRender',
+  {
+      startLocation: { lat: startLat, lon: startLon },
+      endLocation: { lat: endLat, lon: endLon }
+  });
+})
