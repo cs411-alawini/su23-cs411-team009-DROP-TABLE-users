@@ -13,7 +13,7 @@
 <body>
     <h1>Map Render</h1>
     <div id="mapContainer"></div>
-    <div id>="travelTime"><div>
+    <div id="travelTime"></div>
     <script type="text/javascript">
         //loads in the map render 
         function loadMapScenario() {
@@ -22,8 +22,8 @@
                 center: new Microsoft.Maps.Location(40.1140, -88.2281), // Set the center to the ECE Building at UIUC (latitude, longitude)
                 zoom: 12 // Set the initial zoom level 
             });
-            var startLocation = new Microsoft.Maps.Location(<%= startLocation.lat %>, <%= startLocation.lon %>);  // Starting location
-            var endLocation = new Microsoft.Maps.Location((<%= endLocation.lat %>, <%= endLocation.lon %>);     // Ending location
+            var startLocation = new Microsoft.Maps.Location(startLocation.lat , startLocation.lon );  // Starting location
+            var endLocation = new Microsoft.Maps.Location((endLocation.lat , endLocation.lon );     // Ending location
 
             //Create directions manager used of showing the route
             Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
@@ -44,9 +44,6 @@
                 });
 
                 // Specify the element in which the itinerary will be rendered.
-                directionsManager.setRenderOptions({
-                    itineraryContainer: document.getElementById('printoutPanel')
-                });
 
                 Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', function (eventArgs) {
                     var routeSummary = eventArgs.routeSummary[0];
