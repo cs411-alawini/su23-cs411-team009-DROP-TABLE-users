@@ -343,11 +343,11 @@ app.get('/map', (req, res) => {
     var startLon = 88.227241;
     var endLat = 40.101811;
     var endLon = -88.231658;
-    res.render('mapRender')
+    res.render('mapRender',
     {
         startLocation: { lat: startLat, lon: startLon },
         endLocation: { lat: endLat, lon: endLon }
-    };
+    });
 })
 
 // POST Request: Search by Rating
