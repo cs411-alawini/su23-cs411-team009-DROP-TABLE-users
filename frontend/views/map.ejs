@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+<%- include("outlines/headers"); -%>
+
 <head>
-    <title>Bing Map Example</title>
+    <title>Map Visuals</title>
     <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=AnCiUQKehSo7BmsdF1bKwT9veAkYnhOI0bwCbnTERCvK4QidM97x4ZnGaGoqSyUP"></script>
     <style>
         #mapContainer {
@@ -11,8 +13,23 @@
     </style>
 </head>
 <body>
-    <h1>Map Render</h1>
-    <div id="mapContainer"></div>
+    <h1>Plan Your Courses with Maps</h1>
+    <div id="mapContainer">
+        <div class="container mt-4" id="findOnMap">
+            <div class="card">
+            <div class="card-body">
+             <h2>Course Information:</h2>
+             <form action="findOnMap" method="POST">
+               <div class="form-group">
+                 <label for="CRN1">Course 1 CRN:</label>
+                 <input type="text" class="form-control col-lg-9" id="CRN1" aria-describedby="emailHelp" placeholder="Enter Engineering Sciences,Math,etc" name="CRN1">
+               </div>
+               <button type="submit" class="btn btn-outline-info">Find Route</button>
+             </form>
+            </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
         function loadMapScenario() {
             var map = new Microsoft.Maps.Map(document.getElementById('mapContainer'), {

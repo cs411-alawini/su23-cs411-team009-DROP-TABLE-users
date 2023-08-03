@@ -1,0 +1,56 @@
+<%- include("outlines/headers"); -%>
+<body>
+
+    <div class="container mt-4" id="addToSchedule">
+      <div class="card">
+      <div class="card-body">
+       <h2>Add Course to Your Schedule:</h2>
+       <form action="addToSchedule" method="POST">
+         <div class="form-group">
+            <label for="netid">NetID:</label>
+            <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
+            <label for="CRN">CRN:</label>
+            <input type="text" class="form-control col-lg-9" id="CRN" aria-describedby="emailHelp" placeholder="Enter Course CRN" name="CRN">
+        </div>
+         <button type="submit" class="btn btn-outline-info">Add Course</button>
+       </form>
+      </div>
+      </div>
+    </div>
+
+    <div class="container mt-4" id="deleteFromSchedule">
+        <div class="card">
+        <div class="card-body">
+         <h2>Delete Course:</h2>
+         <form action="deleteFromSchedule" method="POST">
+           <div class="form-group">
+            <label for="netid">NetID:</label>
+            <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
+             <label for="CRN">CRN:</label>
+             <input type="text" class="form-control col-lg-9" id="CRN" aria-describedby="emailHelp" placeholder="Enter Course CRN" name="CRN">
+          </div>
+           <button type="submit" class="btn btn-outline-info">Delete Course</button>
+         </form>
+        </div>
+        </div>
+    </div>
+
+    <div class="container mt-4" id="CheckSchedule">
+        <div class="card">
+        <div class="card-body">
+         <h2>Check Schedule:</h2>
+         <form action="CheckSchedule" method="POST">
+            <div class="form-group">
+                <label for="netid">NetID:</label>
+                <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
+                <label for="semester">Semester:</label>
+                <input type="text" class="form-control col-lg-9" id="semester" aria-describedby="emailHelp" placeholder="Enter semester" name="semester">
+             </div>
+           <button type="submit" class="btn btn-outline-info">Check</button>
+         </form>
+        </div>
+        </div>
+    </div>
+
+
+  </body>

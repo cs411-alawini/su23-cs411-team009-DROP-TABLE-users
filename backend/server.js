@@ -7,7 +7,7 @@ var DROP_TABLE_db = mysql.createConnection({
                 host: '34.71.86.68',
                 user: 'root',
                 password: 'YES',
-                database: 'TestUser2' //changing this to match the table we add (might need to change this)
+                database: 'final_schema' //changing this to match the table we add (might need to change this)
 });
 
 DROP_TABLE_db.connect;
@@ -33,20 +33,25 @@ app.get('/login', function(req, res) {
     res.render('user_login.ejs');
   });
   
-  app.get('/search', function(req, res) {
+app.get('/search', function(req, res) {
     res.render('course_search.ejs');
   });
   
-  app.get('/schedule', function(req, res) {
+app.get('/schedule', function(req, res) {
     res.render('schedule.ejs');
   });
   
-  app.get('/admin', function(req, res) {
+app.get('/admin', function(req, res) {
     res.render('admin.ejs');
   });
 
+app.get('/map', function(req, res) {
+    res.render('map.ejs');
+  });
+
+
   
-// ------------------- User Login Table Queries ------------------- //
+// ------------------- User Login Page ------------------- //
 
 // SQL Util Queries for user Table
 const findNetId = fs.readFileSync('../src/database/Queries/UserLogin/findNetId.sql').toString();
@@ -152,7 +157,7 @@ app.post('/deleteUser', function (req,res) {
 });
 
 
-// ------------------- Course Search Queries ------------------- //
+// ------------------- Course Administration Page ------------------- //
 // Basic Queries
 const findCRN = fs.readFileSync('../src/database/Queries/Courses/findCRN.sql').toString();
 const addCourse = fs.readFileSync('../src/database/Queries/Courses/addCourse.sql').toString();
@@ -280,6 +285,8 @@ app.post('/deleteCourse', function (req,res) {
 });
 
 
+// ------------------- Course Search Page ------------------- //
+
 // POST Request: Search by Department
 // @desc search courses by department from 'Course_Table'
 // @req getting info from frontend
@@ -336,11 +343,6 @@ app.post('/searchInstr', function(req, res) {
   }
 });
 
-//templete code for map
-app.get('/map', (req, res) => {
-    res.render('mapRender');
-})
-
 // POST Request: Search by Rating
 // @desc search courses by Rating from 'Course_Table'
 // @req getting info from frontend
@@ -371,7 +373,7 @@ app.post('/searchRating', function(req, res) {
 });
 
 
-// advance Queries
+// - ADVANCE Search Queries -
 const getBestGenEds = fs.readFileSync('../src/database/Queries/advQueries/getBestGenEds.sql').toString();
 const avgRatingForProfByGenEds = fs.readFileSync('../src/database/Queries/advQueries/avgRatingForProfByGenEds.sql').toString();
 
@@ -413,3 +415,63 @@ app.post('/advSearch2', (req, res) => {
 app.listen(80, function () {
     console.log('Node app is running on port 80');
 });
+
+
+// ------------------- Schedule Page ------------------- //
+
+const addCourseToSchedule = fs.readFileSync('../src/database/Queries/Schedule/addCourseToSchedule.sql').toString();
+const deleteCourseFromSchedule = fs.readFileSync('../src/database/Queries/Schedule/deleteCourseFromSchedule.sql').toString();
+const displaySchedule = fs.readFileSync('../src/database/Queries/Schedule/displaySchedule.sql').toString();
+
+// POST Request: Search by Department
+// @desc search courses by department from 'Course_Table'
+// @req getting info from frontend
+// @res sending info to frontend
+app.post('/addToSchedule', function(req, res) {
+  console.log("/addToSchedule");
+  var netid = req.body.netid;
+  var CRN = req.body.CRN;
+    DROP_TABLE_db.query(addCourseToSchedule, [CRN, netid], function(err, result) {
+      if (err) {
+        res.send(err)
+        return;
+      }
+      DROP_TABLE_db.query(displayCourseInfo,[req.body.CRN],function(err2,res2){
+        console.log("new course added to schedule");
+        res.render('search_result', { classes: res2 });
+      });
+    });  
+});
+
+// POST Request: Search by Department
+// @desc search courses by department from 'Course_Table'
+// @req getting info from frontend
+// @res sending info to frontend
+app.post('/deleteFromSchedule', function(req, res) {
+  console.log("/deleteFromSchedule");
+  var CRN = req.params.CRN;
+  var netid = req.params.netid;
+  DROP_TABLE_db.query(deleteCourseFromSchedule, [netid,CRN], (err1, res1) => {
+      if (err1) {
+          console.log(err1)
+      } else {
+          res.send("Deleted Sucessfully form Schedule");
+      }
+  });
+});
+
+// @desc search courses by department from 'Course_Table'
+// @req getting info from frontend
+// @res sending info to frontend
+app.post('/CheckSchedule', function(req, res) {
+  console.log("/CheckSchedule");
+  var netid = req.params.netid;
+  DROP_TABLE_db.query(displaySchedule, [netid,semester], function(err, result) {
+      if (err) {
+        res.send(err)
+        return;
+      }
+      res.render('search_result', { classes: result });
+    });
+});
+

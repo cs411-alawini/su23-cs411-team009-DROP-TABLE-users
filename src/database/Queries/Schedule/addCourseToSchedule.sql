@@ -1,0 +1,1 @@
+INSERT INTO enrollment_table VALUE (?,?)
