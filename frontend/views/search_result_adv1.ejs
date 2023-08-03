@@ -31,10 +31,10 @@
       </tr>
     </thead>
     <tbody>
-      <% for (var i = 0; i < classes.length; i++) { %>
+      <% for (var i = 0; i < classes[0].length; i++) { %>
         <tr>
-          <td><%= classes[i].Instructor %></td>
-          <td><%= classes[i].AvgRating %></td>
+          <td><%= classes[0][i].Instructor %></td>
+          <td><%= classes[0][i].AvgRating %></td>
         </tr>
       <% } %>
     </tbody>

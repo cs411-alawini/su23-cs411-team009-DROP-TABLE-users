@@ -1,1 +1,1 @@
-INSERT INTO Courses_Table VALUE (?,?,?,?,?,?,?,?,?,?,?,?)
+INSERT INTO Courses_Table INSERT INTO Courses_Table (CRN, Semester, Title, Department, Credits, BuildingName, Time, Day, Instructor, GenEdID, avgGPA, Rating) VALUESVALUE (?,?,?,?,?,?,?,?,?,?,?,?)

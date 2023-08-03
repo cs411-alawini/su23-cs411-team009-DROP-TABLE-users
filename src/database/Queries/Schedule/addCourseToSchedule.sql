@@ -1,1 +1,1 @@
-INSERT INTO enrollment_table VALUE (?,?)
+INSERT INTO Enrollment_Table (CRN, NetID) VALUE (?,?)

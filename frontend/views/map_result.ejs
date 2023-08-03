@@ -21,10 +21,10 @@
          <h2>Visualize Your Course on Maps:</h2>
          <form action="findPath" method="POST">
            <div class="form-group">
-            <label for="first_CRN">First CRN:</label>
-            <input type="text" class="form-control col-lg-9" id="first_CRN" aria-describedby="emailHelp" placeholder="Enter Course CRN for first course" name="first_CRN">
-            <label for="sec_CRN">Second CRN:</label>
-            <input type="text" class="form-control col-lg-9" id="sec_CRN" aria-describedby="emailHelp" placeholder="Enter Course CRN for second course" name="sec_CRN">
+            <label for="CRN1">First CRN:</label>
+            <input type="text" class="form-control col-lg-9" id="CRN" aria-describedby="emailHelp" placeholder="Enter Course CRN for first course" name="CRN1">
+            <label for="CRN2">Second CRN:</label>
+            <input type="text" class="form-control col-lg-9" id="CRN2" aria-describedby="emailHelp" placeholder="Enter Course CRN for second course" name="CRN2">
         </div>
            <button type="submit" class="btn btn-outline-info">Check Route</button>
          </form>
@@ -33,7 +33,14 @@
       </div>
     <div id="mapContainer"></div>
     <div id="travelTime"><div>
+    <script>
+        var startLat = <%= startLat %>;
+        var startLong = <%= startLong %>;
+        var endLat = <%= endLat %>;
+        var endLong = <%= endLong %>;
+    </script>
     <script type="text/javascript">
+        
         //loads in the map render 
         function loadMapScenario() {
             var map = new Microsoft.Maps.Map(document.getElementById('mapContainer'), {
@@ -42,10 +49,9 @@
                 zoom: 12 // Set the initial zoom level 
             });
             
-            //var startLocation = new Microsoft.Maps.Location( startLocation.lat  ,   startLocation.lon);
-            //var endLocation = new Microsoft.Maps.Location( endLocation.lat  ,   endLocation.lon );
-            var startLocation = new Microsoft.Maps.Location( 40.1140  ,   -88.2281);
-            var endLocation = new Microsoft.Maps.Location( 40.101811 , -88.231658 );
+
+            var startLocation = new Microsoft.Maps.Location(startLat, startLong);
+            var endLocation = new Microsoft.Maps.Location(endLat , endLong);
 
             //Create directions manager used of showing the route
             Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {

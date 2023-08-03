@@ -12,7 +12,6 @@ var DROP_TABLE_db = mysql.createConnection({
 
 DROP_TABLE_db.connect;
 
-
 var app = express();
 
 // set up ejs view engine 
@@ -25,7 +24,7 @@ app.use(express.static(__dirname + '../public'));
 
 /* GET home page, respond by rendering index.ejs */
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Mark Attendance' });
+  res.render('index.ejs');
 });
 
 /* response by navigate to user_login page */
@@ -45,25 +44,16 @@ app.get('/admin', function(req, res) {
     res.render('admin.ejs');
   });
 
-// app.get('/map', function(req, res) {
-//     res.render('map.ejs');
-//   });
-
-  app.get('/map', function (req, res)  {
-    //const { startLat, startLon, endLat, endLon } = req.query; //need for Map_Table to get this per CRN
-    var startLat = 40.109452;
-    var startLon = 88.227241;
-    var endLat = 40.101811;
-    var endLon = -88.231658;
-    res.render('map.ejs',
-    {
-        startLocation: { lat: startLat, lon: startLon },
-        endLocation: { lat: endLat, lon: endLon }
-    });
-  })
+app.get('/map', function (req, res)  {
+  var startLat = 40.109452;
+  var startLon = 88.227241;
+  var endLat = 40.101811;
+  var endLon = -88.231658;
+  res.render('map.ejs',{startLocation: { lat: startLat, lon: startLon },
+                        endLocation: { lat: endLat, lon: endLon }});
+  });
 
 
-  
 // ------------------- User Login Page ------------------- //
 
 // SQL Util Queries for user Table
@@ -76,7 +66,6 @@ const updatePassword = fs.readFileSync('../src/database/Queries/UserLogin/update
 const displayInfo = fs.readFileSync('../src/database/Queries/UserLogin/displayInfo.sql').toString();
 
 // POST Request: Create new User
-// @desc create new user and insert the information into 'User_Login_Table'
 // @req getting information from frontend
 // @res sending information to frontend
 app.post('/createUser', function(req, res) {
@@ -117,7 +106,6 @@ app.post('/createUser', function(req, res) {
 });
 
 // post Request: Update User password\
-// @desc update user's password in 'User_Login_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/updateUserPassword', function (req,res) {
@@ -135,7 +123,6 @@ app.post('/updateUserPassword', function (req,res) {
 });
 
 // post Request: Update User Email address
-// @desc update user's email address in 'User_Login_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/updateUserEmail', function(req,res) {
@@ -153,7 +140,6 @@ app.post('/updateUserEmail', function(req,res) {
 });
 
 // DELETE Request: Delete User
-// @desc delete user from 'User_Login_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/deleteUser', function (req,res) {
@@ -183,7 +169,6 @@ const deleteCourse = fs.readFileSync('../src/database/Queries/Courses/deleteCour
 const displayCourseInfo = fs.readFileSync('../src/database/Queries/Courses/displayCourseInfo.sql').toString();
 
 // POST Request: Add New Courses
-// @desc create new user and insert the information into 'User_Login_Table'
 // @req getting information from frontend
 // @res sending information to frontend
 app.post('/addCourses', function(req, res) {
@@ -301,7 +286,6 @@ app.post('/deleteCourse', function (req,res) {
 // ------------------- Course Search Page ------------------- //
 
 // POST Request: Search by Department
-// @desc search courses by department from 'Course_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/searchDept', function(req, res) {
@@ -328,7 +312,6 @@ app.post('/searchDept', function(req, res) {
 });
 
 // POST Request: Search by Instructor Name
-// @desc search courses by instructor from 'Course_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/searchInstr', function(req, res) {
@@ -386,14 +369,12 @@ app.post('/searchRating', function(req, res) {
 });
 
 
-// - ADVANCE Search Queries -
+// ---- ADVANCE Search Queries ------- //
 const getBestGenEds = fs.readFileSync('../src/database/Queries/advQueries/getBestGenEds.sql').toString();
 const avgRatingForProfByGenEds = fs.readFileSync('../src/database/Queries/advQueries/avgRatingForProfByGenEds.sql').toString();
 
 
-// POST Request: Get TOP N GPA courses
-// @TODO Not advanced queries, need modification
-// @desc search courses by Rating from 'Course_Table'
+// POST Request: Advance Search 1 (adv queries)
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/advSearch1', function(req, res) {
@@ -405,12 +386,12 @@ app.post('/advSearch1', function(req, res) {
       console.error(err);
       return;
     }
+    console.log(result);
     res.render('search_result_adv1',{classes: result})
   });
 });
 
-// POST Request: Get TOP N GPA GenEd courses
-// @desc search courses by Rating from 'Course_Table'
+// POST Request: Advance Search 2 (adv queries)
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/advSearch2', (req, res) => {
@@ -430,14 +411,14 @@ app.listen(80, function () {
 });
 
 
-// ------------------- Schedule Page ------------------- //
+// ------------------- Course Schedule Page ------------------- //
 
 const addCourseToSchedule = fs.readFileSync('../src/database/Queries/Schedule/addCourseToSchedule.sql').toString();
 const deleteCourseFromSchedule = fs.readFileSync('../src/database/Queries/Schedule/deleteCourseFromSchedule.sql').toString();
 const displaySchedule = fs.readFileSync('../src/database/Queries/Schedule/displaySchedule.sql').toString();
+const CheckDifficulty = fs.readFileSync('../src/database/Queries/Schedule/CheckDifficulty.sql').toString();
 
-// POST Request: Search by Department
-// @desc search courses by department from 'Course_Table'
+// POST Request: Add Course to Schedule
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/addToSchedule', function(req, res) {
@@ -456,14 +437,13 @@ app.post('/addToSchedule', function(req, res) {
     });  
 });
 
-// POST Request: Search by Department
-// @desc search courses by department from 'Course_Table'
+// POST Request: Delete Course from Schedule
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/deleteFromSchedule', function(req, res) {
   console.log("/deleteFromSchedule");
-  var CRN = req.params.CRN;
-  var netid = req.params.netid;
+  var CRN = req.body.CRN;
+  var netid = req.body.netid;
   DROP_TABLE_db.query(deleteCourseFromSchedule, [netid,CRN], (err1, res1) => {
       if (err1) {
           console.log(err1)
@@ -473,12 +453,13 @@ app.post('/deleteFromSchedule', function(req, res) {
   });
 });
 
-// @desc search courses by department from 'Course_Table'
+// POST Request: Display student's Schedule by netID
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/CheckSchedule', function(req, res) {
   console.log("/CheckSchedule");
-  var netid = req.params.netid;
+  var netid = req.body.netid;
+  var semester = req.body.semester;
   DROP_TABLE_db.query(displaySchedule, [netid,semester], function(err, result) {
       if (err) {
         res.send(err)
@@ -488,19 +469,44 @@ app.post('/CheckSchedule', function(req, res) {
     });
 });
 
+// POST Request: Display student course difficulty level
+// @req getting info from frontend
+// @res sending info to frontend
+app.post('/CheckDiff', function(req, res) {
+  console.log("/CheckDiff");
+  var netid = req.body.netid;
+  DROP_TABLE_db.query('CALL CalculateAverageGPAEveryone();', function(err, result) { });
+  DROP_TABLE_db.query(CheckDifficulty, [netid], function(err, result) {
+      if (err) {
+        res.send(err)
+        return;
+      }
+      res.render('checkDiff_result', { result });
+      console.log(result);
+      console.log(typeof result);
+    });
+});
 
-// ------------------- Schedule Page ------------------- //
 
+// ------------------- Map Page (Extra Function) ------------------- //
 
-app.get('/map', (req, res) => {
-  //const { startLat, startLon, endLat, endLon } = req.query; //need for Map_Table to get this per CRN
-  var startLat = 40.109452;
-  var startLon = 88.227241;
-  var endLat = 40.101811;
-  var endLon = -88.231658;
-  res.render('mapRender',
-  {
-      startLocation: { lat: startLat, lon: startLon },
-      endLocation: { lat: endLat, lon: endLon }
+const mapDataFetch = fs.readFileSync('../src/database/Queries/Map/findMapData.sql').toString();
+
+app.post('/findPath', function(req, res) {
+  console.log("/findPath");
+  var CRN1 = req.body.first_CRN;
+  var CRN2 = req.body.sec_CRN;
+
+  DROP_TABLE_db.query(mapDataFetch,[CRN1,CRN2], function(err,results){
+    if(err)
+    {
+      res.send("Please enter vaild CRN")
+    }
+    //@TODO:add actual map_result function
+    var startLat = parseFloat(results[0].Latitudes);
+    var startLong = parseFloat(results[0].Longitudes);
+    var endLat = parseFloat(results[1].Latitudes);
+    var endLong = parseFloat(results[1].Longitudes);
+    res.render('map_result',{startLat, startLong, endLat, endLong});   
   });
 })

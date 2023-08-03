@@ -1,5 +1,5 @@
 SELECT * 
-FROM enrollment_table e 
-JOIN Courses_Table c ON c.NetID = e.NetID 
+FROM Enrollment_Table e 
+JOIN Courses_Table c ON c.CRN = e.CRN
 WHERE NetID LIKE ?
-ORDER BY c.semester ASC;
+ORDER BY c.Semester ASC;

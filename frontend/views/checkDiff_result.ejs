@@ -57,11 +57,7 @@
       <div class="card-body">
        <h2>Check Schedule Difficulty:</h2>
        <form action="CheckDiff" method="POST">
-          <div class="form-group">
-              <label for="netid">NetID:</label>
-              <input type="text" class="form-control col-lg-9" id="netid" aria-describedby="emailHelp" placeholder="Enter student netid" name="netid">
-           </div>
-         <button type="submit" class="btn btn-outline-info">Check Difficulty</button>
+          <td>Difficult Level: <%= result[0][0].person_avg_gpa %></td>
        </form>
       </div>
       </div>
