@@ -1,0 +1,1 @@
+INSERT INTO Enrollment_Table (CRN, NetID) VALUE (?,?)

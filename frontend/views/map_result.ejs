@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<%- include("outlines/headers"); -%>
+
+<head>
+    <title>Map Visuals</title>
+    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=AnCiUQKehSo7BmsdF1bKwT9veAkYnhOI0bwCbnTERCvK4QidM97x4ZnGaGoqSyUP"></script>
+    <style>
+        #mapContainer {
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Map Visuals</h1>
+    <div class="container mt-4" id="findPath">
+        <div class="card">
+        <div class="card-body">
+         <h2>Visualize Your Course on Maps:</h2>
+         <form action="findPath" method="POST">
+           <div class="form-group">
+            <label for="CRN1">First CRN:</label>
+            <input type="text" class="form-control col-lg-9" id="CRN" aria-describedby="emailHelp" placeholder="Enter Course CRN for first course" name="CRN1">
+            <label for="CRN2">Second CRN:</label>
+            <input type="text" class="form-control col-lg-9" id="CRN2" aria-describedby="emailHelp" placeholder="Enter Course CRN for second course" name="CRN2">
+        </div>
+           <button type="submit" class="btn btn-outline-info">Check Route</button>
+         </form>
+        </div>
+        </div>
+      </div>
+    <div id="mapContainer"></div>
+    <div id="travelTime"><div>
+    <script>
+        var startLat = <%= startLat %>;
+        var startLong = <%= startLong %>;
+        var endLat = <%= endLat %>;
+        var endLong = <%= endLong %>;
+    </script>
+    <script type="text/javascript">
+        
+        //loads in the map render 
+        function loadMapScenario() {
+            var map = new Microsoft.Maps.Map(document.getElementById('mapContainer'), {
+                credentials: 'AnCiUQKehSo7BmsdF1bKwT9veAkYnhOI0bwCbnTERCvK4QidM97x4ZnGaGoqSyUP',
+                center: new Microsoft.Maps.Location(40.1140, -88.2281), // Set the center to the ECE Building at UIUC (latitude, longitude)
+                zoom: 12 // Set the initial zoom level 
+            });
+            
+
+            var startLocation = new Microsoft.Maps.Location(startLat, startLong);
+            var endLocation = new Microsoft.Maps.Location(endLat , endLong);
+
+            //Create directions manager used of showing the route
+            Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+                var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+                
+                // Create waypoints
+                var startWaypoint = new Microsoft.Maps.Directions.Waypoint({ location: startLocation });
+                var endWaypoint = new Microsoft.Maps.Directions.Waypoint({ location: endLocation });
+                
+                // Add waypoints to direction manager
+                directionsManager.addWaypoint(startWaypoint);
+                directionsManager.addWaypoint(endWaypoint);
+
+                // Set the request options that avoid highways and avoid toll roads.
+                directionsManager.setRequestOptions({
+                    routeMode: Microsoft.Maps.Directions.RouteMode.walking,
+                    routeAvoidance: [Microsoft.Maps.Directions.RouteAvoidance.avoidLimitedAccessHighway, Microsoft.Maps.Directions.RouteAvoidance.avoidToll]
+                });
+
+                // Specify the element in which the itinerary will be rendered.
+                directionsManager.setRenderOptions({
+                    itineraryContainer: document.getElementById('printoutPanel')
+                });
+
+                Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', function (eventArgs) {
+                    var routeSummary = eventArgs.routeSummary[0];
+                    var travelTime = Math.floor((routeSummary.timeWithTraffic)/60); // Get the travel time
+
+                    // Display the travel time
+                    var travelTimeElement = document.getElementById('travelTime');
+                    travelTimeElement.textContent = 'Travel Time: ' + travelTime + ' minutes';
+                });
+
+                // Calculate directions, which displays a route on the map.
+                directionsManager.calculateDirections();
+            });
+        }
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario' async defer></script>
+</body>
+</html>

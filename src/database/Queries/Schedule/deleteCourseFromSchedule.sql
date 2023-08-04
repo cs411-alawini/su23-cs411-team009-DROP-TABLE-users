@@ -1,0 +1,1 @@
+DELETE FROM Enrollment_Table WHERE NetID LIKE ? AND CRN LIKE ?

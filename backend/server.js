@@ -7,11 +7,10 @@ var DROP_TABLE_db = mysql.createConnection({
                 host: '34.71.86.68',
                 user: 'root',
                 password: 'YES',
-                database: 'TestUser2' //changing this to match the table we add (might need to change this)
+                database: 'final_schema' //changing this to match the table we add (might need to change this)
 });
 
 DROP_TABLE_db.connect;
-
 
 var app = express();
 
@@ -25,7 +24,7 @@ app.use(express.static(__dirname + '../public'));
 
 /* GET home page, respond by rendering index.ejs */
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Mark Attendance' });
+  res.render('index.ejs');
 });
 
 /* response by navigate to user_login page */
@@ -33,20 +32,29 @@ app.get('/login', function(req, res) {
     res.render('user_login.ejs');
   });
   
-  app.get('/search', function(req, res) {
+app.get('/search', function(req, res) {
     res.render('course_search.ejs');
   });
   
-  app.get('/schedule', function(req, res) {
+app.get('/schedule', function(req, res) {
     res.render('schedule.ejs');
   });
   
-  app.get('/admin', function(req, res) {
+app.get('/admin', function(req, res) {
     res.render('admin.ejs');
   });
 
-  
-// ------------------- User Login Table Queries ------------------- //
+app.get('/map', function (req, res)  {
+  var startLat = 40.109452;
+  var startLon = 88.227241;
+  var endLat = 40.101811;
+  var endLon = -88.231658;
+  res.render('map.ejs',{startLocation: { lat: startLat, lon: startLon },
+                        endLocation: { lat: endLat, lon: endLon }});
+  });
+
+
+// ------------------- User Login Page ------------------- //
 
 // SQL Util Queries for user Table
 const findNetId = fs.readFileSync('../src/database/Queries/UserLogin/findNetId.sql').toString();
@@ -58,7 +66,6 @@ const updatePassword = fs.readFileSync('../src/database/Queries/UserLogin/update
 const displayInfo = fs.readFileSync('../src/database/Queries/UserLogin/displayInfo.sql').toString();
 
 // POST Request: Create new User
-// @desc create new user and insert the information into 'User_Login_Table'
 // @req getting information from frontend
 // @res sending information to frontend
 app.post('/createUser', function(req, res) {
@@ -99,7 +106,6 @@ app.post('/createUser', function(req, res) {
 });
 
 // post Request: Update User password\
-// @desc update user's password in 'User_Login_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/updateUserPassword', function (req,res) {
@@ -117,7 +123,6 @@ app.post('/updateUserPassword', function (req,res) {
 });
 
 // post Request: Update User Email address
-// @desc update user's email address in 'User_Login_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/updateUserEmail', function(req,res) {
@@ -135,7 +140,6 @@ app.post('/updateUserEmail', function(req,res) {
 });
 
 // DELETE Request: Delete User
-// @desc delete user from 'User_Login_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/deleteUser', function (req,res) {
@@ -152,7 +156,7 @@ app.post('/deleteUser', function (req,res) {
 });
 
 
-// ------------------- Course Search Queries ------------------- //
+// ------------------- Course Administration Page ------------------- //
 // Basic Queries
 const findCRN = fs.readFileSync('../src/database/Queries/Courses/findCRN.sql').toString();
 const addCourse = fs.readFileSync('../src/database/Queries/Courses/addCourse.sql').toString();
@@ -165,7 +169,6 @@ const deleteCourse = fs.readFileSync('../src/database/Queries/Courses/deleteCour
 const displayCourseInfo = fs.readFileSync('../src/database/Queries/Courses/displayCourseInfo.sql').toString();
 
 // POST Request: Add New Courses
-// @desc create new user and insert the information into 'User_Login_Table'
 // @req getting information from frontend
 // @res sending information to frontend
 app.post('/addCourses', function(req, res) {
@@ -280,8 +283,9 @@ app.post('/deleteCourse', function (req,res) {
 });
 
 
+// ------------------- Course Search Page ------------------- //
+
 // POST Request: Search by Department
-// @desc search courses by department from 'Course_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/searchDept', function(req, res) {
@@ -308,7 +312,6 @@ app.post('/searchDept', function(req, res) {
 });
 
 // POST Request: Search by Instructor Name
-// @desc search courses by instructor from 'Course_Table'
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/searchInstr', function(req, res) {
@@ -366,14 +369,12 @@ app.post('/searchRating', function(req, res) {
 });
 
 
-// advance Queries
+// ---- ADVANCE Search Queries ------- //
 const getBestGenEds = fs.readFileSync('../src/database/Queries/advQueries/getBestGenEds.sql').toString();
 const avgRatingForProfByGenEds = fs.readFileSync('../src/database/Queries/advQueries/avgRatingForProfByGenEds.sql').toString();
 
 
-// POST Request: Get TOP N GPA courses
-// @TODO Not advanced queries, need modification
-// @desc search courses by Rating from 'Course_Table'
+// POST Request: Advance Search 1 (adv queries)
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/advSearch1', function(req, res) {
@@ -385,12 +386,12 @@ app.post('/advSearch1', function(req, res) {
       console.error(err);
       return;
     }
+    console.log(result);
     res.render('search_result_adv1',{classes: result})
   });
 });
 
-// POST Request: Get TOP N GPA GenEd courses
-// @desc search courses by Rating from 'Course_Table'
+// POST Request: Advance Search 2 (adv queries)
 // @req getting info from frontend
 // @res sending info to frontend
 app.post('/advSearch2', (req, res) => {
@@ -408,3 +409,104 @@ app.post('/advSearch2', (req, res) => {
 app.listen(80, function () {
     console.log('Node app is running on port 80');
 });
+
+
+// ------------------- Course Schedule Page ------------------- //
+
+const addCourseToSchedule = fs.readFileSync('../src/database/Queries/Schedule/addCourseToSchedule.sql').toString();
+const deleteCourseFromSchedule = fs.readFileSync('../src/database/Queries/Schedule/deleteCourseFromSchedule.sql').toString();
+const displaySchedule = fs.readFileSync('../src/database/Queries/Schedule/displaySchedule.sql').toString();
+const CheckDifficulty = fs.readFileSync('../src/database/Queries/Schedule/CheckDifficulty.sql').toString();
+
+// POST Request: Add Course to Schedule
+// @req getting info from frontend
+// @res sending info to frontend
+app.post('/addToSchedule', function(req, res) {
+  console.log("/addToSchedule");
+  var netid = req.body.netid;
+  var CRN = req.body.CRN;
+    DROP_TABLE_db.query(addCourseToSchedule, [CRN, netid], function(err, result) {
+      if (err) {
+        res.send(err)
+        return;
+      }
+      DROP_TABLE_db.query(displayCourseInfo,[req.body.CRN],function(err2,res2){
+        console.log("new course added to schedule");
+        res.render('search_result', { classes: res2 });
+      });
+    });  
+});
+
+// POST Request: Delete Course from Schedule
+// @req getting info from frontend
+// @res sending info to frontend
+app.post('/deleteFromSchedule', function(req, res) {
+  console.log("/deleteFromSchedule");
+  var CRN = req.body.CRN;
+  var netid = req.body.netid;
+  DROP_TABLE_db.query(deleteCourseFromSchedule, [netid,CRN], (err1, res1) => {
+      if (err1) {
+          console.log(err1)
+      } else {
+          res.send("Deleted Sucessfully form Schedule");
+      }
+  });
+});
+
+// POST Request: Display student's Schedule by netID
+// @req getting info from frontend
+// @res sending info to frontend
+app.post('/CheckSchedule', function(req, res) {
+  console.log("/CheckSchedule");
+  var netid = req.body.netid;
+  var semester = req.body.semester;
+  DROP_TABLE_db.query(displaySchedule, [netid,semester], function(err, result) {
+      if (err) {
+        res.send(err)
+        return;
+      }
+      res.render('search_result', { classes: result });
+    });
+});
+
+// POST Request: Display student course difficulty level
+// @req getting info from frontend
+// @res sending info to frontend
+app.post('/CheckDiff', function(req, res) {
+  console.log("/CheckDiff");
+  var netid = req.body.netid;
+  DROP_TABLE_db.query('CALL CalculateAverageGPAEveryone();', function(err, result) { });
+  DROP_TABLE_db.query(CheckDifficulty, [netid], function(err, result) {
+      if (err) {
+        res.send(err)
+        return;
+      }
+      res.render('checkDiff_result', { result });
+      console.log(result);
+      console.log(typeof result);
+    });
+});
+
+
+// ------------------- Map Page (Extra Function) ------------------- //
+
+const mapDataFetch = fs.readFileSync('../src/database/Queries/Map/findMapData.sql').toString();
+
+app.post('/findPath', function(req, res) {
+  console.log("/findPath");
+  var CRN1 = req.body.first_CRN;
+  var CRN2 = req.body.sec_CRN;
+
+  DROP_TABLE_db.query(mapDataFetch,[CRN1,CRN2], function(err,results){
+    if(err)
+    {
+      res.send("Please enter vaild CRN")
+    }
+    //@TODO:add actual map_result function
+    var startLat = parseFloat(results[0].Latitudes);
+    var startLong = parseFloat(results[0].Longitudes);
+    var endLat = parseFloat(results[1].Latitudes);
+    var endLong = parseFloat(results[1].Longitudes);
+    res.render('map_result',{startLat, startLong, endLat, endLong});   
+  });
+})
