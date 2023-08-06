@@ -17,11 +17,11 @@
 
 ## Project Information
 
-|   Info      |        Description     |
-| ----------- | ---------------------- |
-|  Title      |Advance Course Explorer     |
-| System URL  |      link_to_system    |
-| Video Link  |      link_to_video     |
+|   Info      |                Description                 |
+| ----------- | ------------------------------------------ |
+|  Title      |         Advance Course Explorer            |
+| System URL  |          http://35.208.214.110/            |
+| Video Link  |https://www.youtube.com/watch?v=4wzbq1iaN0k)|
 
 ## Project Summary
 
