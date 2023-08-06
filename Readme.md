@@ -1,17 +1,6 @@
 # Team009-Advance Course Explorer
 
-This is a template for CS411 project repository. Please make sure that your title follows the convention: [TeamID]-[YourTeamName]. All TeamID should have a three digit coding (i.e. if you are team 20, you should have `team020` as your ID.). You should also make sure that your url for this repository is [su23-cs411-team000-teamname.git] so TAs can correctly clone your repository and keep them up-to-date.
+This is a advance course explorer that help students to plan their future courses. Our website guides user to create account in system, search for courses in a variety of criteria, personalize students' own schedule and even visualize your travel route on the Map! We also recommend users to try with the special functionalities that would help them to find the best GenEd Classes and difficulty level of current schedule! We meant to help student and release their pressure when making their decisions. Make advance Course Explorer your best friend!
 
-Once you setup your project, please remember to submit your team formation to the team form.
-
-## Permission
-You should make sure you allow TAs to access your repository. You can add TA(s) as a collaborator to your repository.
-
-## Preparing for your release
-Eash submission should be in it's own [release](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases). Release are specific freezes to your repository. You should submit your commit hash on canvas or google sheet. When tagging your stage, please use the tag `stage.x` where x is the number to represent the stage.
-
-## Keeping things up-to-date
-You should make sure you keep your project root files up-to-date. Information for each file/folders are explained.
-
-## Code Contribution
-Individual code contribution will be used to evaluate individual contribution to the project.
+## Link to Video
+Here is a link for demo video: https://www.youtube.com/watch?v=4wzbq1iaN0k
